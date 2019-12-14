@@ -8,7 +8,10 @@ const App: React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/collection" component={CollectionContainer} />
+        <Route
+          path="/collection/:collectionId"
+          component={CollectionContainer}
+        />
         <Route path="/" component={CollectionListContainer} />
       </Switch>
     </Router>

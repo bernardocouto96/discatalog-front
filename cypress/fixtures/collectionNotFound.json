@@ -1,0 +1,5 @@
+{
+  "error": "collection not found",
+  "errorCode": 404,
+  "message": "no collection was found with the collectionId: 123"
+}
