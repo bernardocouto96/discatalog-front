@@ -6,10 +6,16 @@ type CollectionComponentProps = {
   collection: Collection;
 };
 
-const CollectionListComponent: React.FC<CollectionComponentProps> = ({
+const CollectionComponent: React.FC<CollectionComponentProps> = ({
   collection
 }) => {
-  return <div></div>;
+  return (
+    <ul id="discs">
+      {collection.discs.map(disc => (
+        <li>{disc.name}</li>
+      ))}
+    </ul>
+  );
 };
 
-export default CollectionListComponent;
+export default CollectionComponent;

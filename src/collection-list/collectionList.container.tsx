@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import * as R from "ramda";
 
 import CollectionList from "./collectionList.compoment";
 import { fetchCollectionList } from "./collectionList.requests";
@@ -25,9 +26,7 @@ const CollectionListContainer: React.FC = () => {
     return redirectHandler(collections, redirectParams.collectionId);
   }
 
-  return isLoading ? (
-    <div>loading...</div>
-  ) : (
+  return (
     <CollectionList
       collections={collections}
       onCollectionSelect={onCollectionSelect(setRedirectParams)}
@@ -70,7 +69,7 @@ const redirectHandler = (
     <Redirect
       to={{
         pathname: `/collection/${selectedCollectionId}`,
-        state: { collection: selectedCollection }
+        state: { collection: R.head(selectedCollection) }
       }}
     />
   );

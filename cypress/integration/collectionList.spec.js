@@ -23,11 +23,23 @@ describe("Collection List Test", function() {
       .should("contain", "Top 7 - 9");
   });
 
-  it("redirects to the correct collection", function() {
+  it("redirects to the correct collection path with the collection data", function() {
     cy.get("#collections > li")
-      .eq(1)
+      .eq(0)
       .click();
 
-    cy.location("pathname").should("eq", "/collection/2");
+    cy.location("pathname").should("eq", "/collection/1");
+
+    cy.get("#discs > li").should("have.length", 3);
+
+    cy.get("#discs > li")
+      .eq(0)
+      .should("contain", "Thriller");
+    cy.get("#discs > li")
+      .eq(1)
+      .should("contain", "Back in Black");
+    cy.get("#discs > li")
+      .eq(2)
+      .should("contain", "The Dark Side of the Moon");
   });
 });
