@@ -5,9 +5,12 @@ import * as R from "ramda";
 import CollectionList from "./collectionList.compoment";
 import { fetchCollectionList } from "./collectionList.requests";
 import { Collection } from "../types/collection.types";
+import { emptyCollection } from "../types/collection.creators";
 
 const CollectionListContainer: React.FC = () => {
-  const [collections, setCollections] = useState<[Collection] | []>([]);
+  const [collections, setCollections] = useState<[Collection]>([
+    emptyCollection
+  ]);
   const [isLoading, setLoading] = useState(true);
   const [redirectParams, setRedirectParams] = useState({
     shouldRedirect: false,
@@ -35,7 +38,7 @@ const CollectionListContainer: React.FC = () => {
 };
 
 const loadCollections = async (
-  setCollections: React.Dispatch<React.SetStateAction<[Collection] | []>>,
+  setCollections: React.Dispatch<React.SetStateAction<[Collection]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const { data } = await fetchCollectionList();
@@ -58,7 +61,7 @@ const onCollectionSelect = (
 };
 
 const redirectHandler = (
-  collections: [Collection] | [],
+  collections: [Collection],
   selectedCollectionId: string
 ) => {
   const selectedCollection = collections.filter(

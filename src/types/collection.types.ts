@@ -1,4 +1,4 @@
-type Disc = {
+export type Disc = {
   discId: string;
   name: string;
   genre: string;

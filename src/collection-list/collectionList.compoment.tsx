@@ -3,7 +3,7 @@ import React from "react";
 import { Collection } from "../types/collection.types";
 
 type CollectionListComponentProps = {
-  collections: [Collection] | [];
+  collections: [Collection];
   onCollectionSelect: (collectionId: string) => void;
 };
 
