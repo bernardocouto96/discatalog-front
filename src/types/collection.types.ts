@@ -1,5 +1,5 @@
 type Disc = {
-  discId: number;
+  discId: string;
   name: string;
   genre: string;
   artist: string;
@@ -7,7 +7,7 @@ type Disc = {
 };
 
 export type Collection = {
-  collectionId: Number;
+  collectionId: string;
   collectionName: string;
   discs: [Disc];
 };

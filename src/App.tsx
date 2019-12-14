@@ -1,8 +1,18 @@
 import React from "react";
-import CollectionListContainer from "./collection/collectionList.container";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import CollectionListContainer from "./collection-list/collectionList.container";
+import CollectionContainer from "./collection/collection.container";
 
 const App: React.FC = () => {
-  return <CollectionListContainer />;
+  return (
+    <Router>
+      <Switch>
+        <Route path="/collection" component={CollectionContainer} />
+        <Route path="/" component={CollectionListContainer} />
+      </Switch>
+    </Router>
+  );
 };
 
 export default App;
