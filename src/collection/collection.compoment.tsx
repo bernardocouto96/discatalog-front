@@ -5,11 +5,13 @@ import { Collection } from "../types/collection.types";
 type CollectionComponentProps = {
   collection: Collection;
   hasError: boolean;
+  onDiscDelete: (discId: string) => void;
 };
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   collection,
-  hasError
+  hasError,
+  onDiscDelete
 }) => {
   return hasError ? (
     <div id="error">
@@ -20,7 +22,15 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
   ) : (
     <ul id="discs">
       {collection.discs.map(disc => (
-        <li key={disc.discId}>{disc.name}</li>
+        <li key={disc.discId}>
+          {disc.name}
+          <button
+            id={`delete-${disc.discId}`}
+            onClick={() => onDiscDelete(disc.discId)}
+          >
+            excluir disco
+          </button>
+        </li>
       ))}
     </ul>
   );

@@ -2,13 +2,13 @@ import collectionList from "../fixtures/collectionList";
 
 describe("Collection List Test", function() {
   it("renders every collections correctly", function() {
-    cy.visit("http://localhost:3000");
     cy.server();
     cy.route({
       method: "GET",
       url: "/discatalog/collection",
       response: collectionList
     });
+    cy.visit("http://localhost:3000");
 
     cy.get("#collections > li").should("have.length", 3);
 
@@ -24,6 +24,14 @@ describe("Collection List Test", function() {
   });
 
   it("redirects to the correct collection path with the collection data", function() {
+    cy.server();
+    cy.route({
+      method: "GET",
+      url: "/discatalog/collection",
+      response: collectionList
+    });
+    cy.visit("http://localhost:3000");
+
     cy.get("#collections > li")
       .eq(0)
       .click();

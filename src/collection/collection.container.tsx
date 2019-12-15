@@ -4,7 +4,10 @@ import * as R from "ramda";
 import { Collection } from "../types/collection.types";
 import CollectionComponent from "./collection.compoment";
 import { emptyCollection } from "../types/collection.creators";
-import { fetchCollection } from "./collection.requests";
+import {
+  fetchCollection,
+  deleteDiscFromCollection
+} from "./collection.requests";
 
 type Location = {
   state: {
@@ -44,7 +47,13 @@ const CollectionContainer: React.FC<CollectionContainerProps> = ({
     return <div>loading...</div>;
   }
 
-  return <CollectionComponent collection={collection} hasError={hasError} />;
+  return (
+    <CollectionComponent
+      collection={collection}
+      hasError={hasError}
+      onDiscDelete={onDiscDelete(collection, setCollection)}
+    />
+  );
 };
 
 const handleComponentLoad = (
@@ -77,6 +86,15 @@ const loadCollection = async (
     setHasError(true);
     setLoading(false);
   }
+};
+
+const onDiscDelete = (
+  { collectionId }: Collection,
+  setCollection: React.Dispatch<React.SetStateAction<Collection>>
+) => async (discId: string) => {
+  await deleteDiscFromCollection(collectionId, discId);
+  const { data } = await fetchCollection(collectionId);
+  setCollection(data);
 };
 
 export default CollectionContainer;
