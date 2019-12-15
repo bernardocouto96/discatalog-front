@@ -7,7 +7,8 @@ import { emptyCollection, emptyDisc } from "../types/collection.creators";
 import {
   fetchCollection,
   deleteDiscFromCollection,
-  editDiscFromCollection
+  editDiscFromCollection,
+  createDiscForCollection
 } from "./collection.requests";
 
 type Location = {
@@ -30,6 +31,7 @@ type CollectionFlags = {
   isLoading: boolean;
   hasError: boolean;
   showEditModal: boolean;
+  showCreateModal: boolean;
 };
 
 const CollectionContainer: React.FC<CollectionContainerProps> = ({
@@ -38,11 +40,11 @@ const CollectionContainer: React.FC<CollectionContainerProps> = ({
 }) => {
   const [collection, setCollection] = useState<Collection>(emptyCollection);
   const [discToBeEdited, setDiscToBeEdited] = useState<Disc>(emptyDisc);
-
   const [collectionFlags, setCollectionFlags] = useState<CollectionFlags>({
     isLoading: true,
     hasError: false,
-    showEditModal: false
+    showEditModal: false,
+    showCreateModal: false
   });
 
   useEffect(() => {
@@ -63,6 +65,7 @@ const CollectionContainer: React.FC<CollectionContainerProps> = ({
       collection={collection}
       hasError={collectionFlags.hasError}
       showEditModal={collectionFlags.showEditModal}
+      showCreateModal={collectionFlags.showCreateModal}
       discToBeEdited={discToBeEdited}
       onDiscDelete={onDiscDelete(
         collection,
@@ -73,7 +76,18 @@ const CollectionContainer: React.FC<CollectionContainerProps> = ({
         setDiscToBeEdited,
         updateCollectionFlags(collectionFlags, setCollectionFlags)
       )}
+      onCreateButtonClick={() =>
+        updateCollectionFlags(
+          collectionFlags,
+          setCollectionFlags
+        )({ showCreateModal: true })
+      }
       onDiscEdit={onDiscEdit(
+        collection,
+        setCollection,
+        updateCollectionFlags(collectionFlags, setCollectionFlags)
+      )}
+      onDiscCreate={onDiscCreate(
         collection,
         setCollection,
         updateCollectionFlags(collectionFlags, setCollectionFlags)
@@ -146,6 +160,17 @@ const onDiscEdit = (
   setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
 ) => async (disc: Disc) => {
   await editDiscFromCollection(collectionId, disc);
+  setCollectionFlags({ showEditModal: false });
+  loadCollection(collectionId, setCollection, setCollectionFlags);
+};
+
+const onDiscCreate = (
+  { collectionId }: Collection,
+  setCollection: React.Dispatch<React.SetStateAction<Collection>>,
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
+) => async (disc: Disc) => {
+  await createDiscForCollection(collectionId, disc);
+  setCollectionFlags({ showCreateModal: false });
   loadCollection(collectionId, setCollection, setCollectionFlags);
 };
 

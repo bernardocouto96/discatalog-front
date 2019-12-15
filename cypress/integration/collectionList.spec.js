@@ -42,7 +42,7 @@ describe("Collection List Test", function() {
 
     cy.location("pathname").should("eq", "/collection/1");
 
-    cy.get("#discs > li").should("have.length", 3);
+    cy.get("#discs > li").should("have.length", 4);
 
     cy.get("#discs > li")
       .eq(0)

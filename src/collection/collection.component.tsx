@@ -1,26 +1,33 @@
 import React from "react";
 
 import { Collection, Disc } from "../types/collection.types";
-import EditDiscModalComponent from "./components/editDiscModal.component";
+import DiscModal from "./components/discModal.component";
+import { emptyDisc } from "../types/collection.creators";
 
 type CollectionComponentProps = {
   collection: Collection;
   hasError: boolean;
   showEditModal: boolean;
+  showCreateModal: boolean;
   discToBeEdited: Disc;
   onDiscDelete: (discId: string) => void;
   onEditButtonClick: (disc: Disc) => void;
+  onCreateButtonClick: () => void;
   onDiscEdit: (disc: Disc) => void;
+  onDiscCreate: (disc: Disc) => void;
 };
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   collection,
   hasError,
   showEditModal,
+  showCreateModal,
   discToBeEdited,
   onDiscDelete,
   onEditButtonClick,
-  onDiscEdit
+  onCreateButtonClick,
+  onDiscEdit,
+  onDiscCreate
 }) => {
   return hasError ? (
     <div id="error">
@@ -47,8 +54,24 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
           </button>
         </li>
       ))}
+      <li>
+        <button id="createDisc" onClick={onCreateButtonClick}>
+          adicionar disco
+        </button>
+      </li>
       {showEditModal && (
-        <EditDiscModalComponent disc={discToBeEdited} onFormSend={onDiscEdit} />
+        <DiscModal
+          disc={discToBeEdited}
+          textProps={{ sendButton: "Editar" }}
+          onFormSend={onDiscEdit}
+        />
+      )}
+      {showCreateModal && (
+        <DiscModal
+          disc={emptyDisc}
+          textProps={{ sendButton: "Criar" }}
+          onFormSend={onDiscCreate}
+        />
       )}
     </ul>
   );

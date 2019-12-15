@@ -22,3 +22,12 @@ export const editDiscFromCollection = async (
     `${discatalogApiUrl}/discatalog/collection/${collectionId}/${disc.discId}`,
     disc
   );
+
+export const createDiscForCollection = async (
+  collectionId: string,
+  disc: Disc
+) =>
+  await axios.post(
+    `${discatalogApiUrl}/discatalog/collection/${collectionId}`,
+    disc
+  );

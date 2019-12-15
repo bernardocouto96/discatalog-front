@@ -2,13 +2,15 @@ import React, { useState } from "react";
 
 import { Disc } from "../../types/collection.types";
 
-type EditDiscModalProps = {
+type DiscModalProps = {
   disc: Disc;
+  textProps: { sendButton: string };
   onFormSend: (formFields: Disc) => void;
 };
 
-const EditDiscModalComponent: React.FC<EditDiscModalProps> = ({
+const DiscModalComponent: React.FC<DiscModalProps> = ({
   disc,
+  textProps,
   onFormSend
 }) => {
   const [formFields, setFormFields] = useState({
@@ -26,7 +28,7 @@ const EditDiscModalComponent: React.FC<EditDiscModalProps> = ({
       }}
     >
       <input
-        id="editName"
+        id="formDiscName"
         type="text"
         value={formFields.name}
         onChange={evt =>
@@ -34,7 +36,7 @@ const EditDiscModalComponent: React.FC<EditDiscModalProps> = ({
         }
       />
       <input
-        id="editArtist"
+        id="formDiscArtist"
         type="text"
         value={formFields.artist}
         onChange={evt =>
@@ -42,7 +44,7 @@ const EditDiscModalComponent: React.FC<EditDiscModalProps> = ({
         }
       />
       <input
-        id="editGenre"
+        id="formDiscGenre"
         type="text"
         value={formFields.genre}
         onChange={evt =>
@@ -50,16 +52,16 @@ const EditDiscModalComponent: React.FC<EditDiscModalProps> = ({
         }
       />
       <input
-        id="editReleaseYear"
+        id="formDiscReleaseYear"
         type="text"
         value={formFields.releaseYear}
         onChange={evt =>
           setFormFields({ ...formFields, releaseYear: evt.target.value })
         }
       />
-      <button id="sendEdit">editar</button>
+      <button id="sendDisc">{textProps.sendButton}</button>
     </form>
   );
 };
 
-export default EditDiscModalComponent;
+export default DiscModalComponent;
