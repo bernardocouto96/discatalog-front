@@ -1,7 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 
 import { Collection } from "../types/collection.types";
 import AddCollectionModal from "./components/addCollectionModal.component";
+import CollectionCard from "./components/collectionCard.component";
 
 type CollectionListComponentProps = {
   collections: [Collection];
@@ -19,25 +21,38 @@ const CollectionListComponent: React.FC<CollectionListComponentProps> = ({
   onCollectionCreate
 }) => {
   return !collections.length ? (
-    <div>no collection was found</div>
+    <EmptyCollectionList>
+      <EmptyCollectionListText>no collection was found</EmptyCollectionListText>
+    </EmptyCollectionList>
   ) : (
-    <ul id="collections">
+    <CollectionList id="collections">
       {collections.map(collection => (
-        <li
+        <CollectionListItem
           key={collection.collectionId}
           onClick={() => onCollectionSelect(collection.collectionId)}
         >
-          {collection.collectionName}
-        </li>
+          <CollectionCard collection={collection} />
+        </CollectionListItem>
       ))}
-      <li id="addCollection" onClick={onAddCollectionClick}>
-        Criar nova coleção
-      </li>
+      <AddCollectionItem>
+        <AddCollectionButton id="addCollection" onClick={onAddCollectionClick}>
+          Criar nova coleção
+        </AddCollectionButton>
+      </AddCollectionItem>
       {showCreateCollectionModal && (
         <AddCollectionModal onCollectionCreate={onCollectionCreate} />
       )}
-    </ul>
+    </CollectionList>
   );
 };
+
+const EmptyCollectionList = styled.div``;
+const EmptyCollectionListText = styled.p``;
+
+const CollectionList = styled.ul``;
+const CollectionListItem = styled.li``;
+
+const AddCollectionItem = styled.li``;
+const AddCollectionButton = styled.button``;
 
 export default CollectionListComponent;

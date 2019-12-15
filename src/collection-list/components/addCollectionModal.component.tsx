@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
 type AddCollectionModalProps = {
   onCollectionCreate: (collectionName: string) => void;
@@ -10,22 +11,30 @@ const AddCollectionModalComponent: React.FC<AddCollectionModalProps> = ({
   const [collectionName, setCollectionName] = useState("");
 
   return (
-    <form
+    <AddCollectionForm
       onSubmit={evt => {
         evt.preventDefault();
         onCollectionCreate(collectionName);
       }}
     >
-      <input
+      <CollectionNameInput
         id="newCollectionName"
         type="text"
         value={collectionName}
         onChange={evt => setCollectionName(evt.target.value)}
       />
 
-      <button id="createCollection">Criar</button>
-    </form>
+      <CreateCollectionButton id="createCollection">
+        Criar
+      </CreateCollectionButton>
+    </AddCollectionForm>
   );
 };
+
+const AddCollectionForm = styled.form``;
+
+const CollectionNameInput = styled.input``;
+
+const CreateCollectionButton = styled.input``;
 
 export default AddCollectionModalComponent;
