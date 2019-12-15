@@ -3,7 +3,7 @@ export type Disc = {
   name: string;
   genre: string;
   artist: string;
-  releaseYear: number;
+  releaseYear: string;
 };
 
 export type Collection = {

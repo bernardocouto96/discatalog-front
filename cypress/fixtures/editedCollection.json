@@ -1,0 +1,35 @@
+{
+  "collectionId": "2",
+  "collectionName": "Top 4 - 6",
+  "discs": [
+    {
+      "discId": "4",
+      "name": "My edited name",
+      "genre": "My edited genre",
+      "artist": "My edited artist",
+      "releaseYear": "1992",
+      "createdAt": "2019-12-14T15:44:09-05:00",
+      "updatedAt": "2019-12-14T15:44:09-05:00"
+    },
+    {
+      "discId": "5",
+      "name": "Bat Out of Hell",
+      "genre": "Hard rock, glam rock, heavy metal",
+      "artist": "Meat Loaf",
+      "releaseYear": "1977",
+      "createdAt": "2019-12-14T15:44:09-05:00",
+      "updatedAt": "2019-12-14T15:44:09-05:00"
+    },
+    {
+      "discId": "6",
+      "name": "Their Greatest Hits (1971–1975)",
+      "genre": "Country rock, soft rock, folk rock",
+      "artist": "Eagles",
+      "releaseYear": "1976",
+      "createdAt": "2019-12-14T15:44:09-05:00",
+      "updatedAt": "2019-12-14T15:44:09-05:00"
+    }
+  ],
+  "createdAt": "2019-12-14T15:44:09-05:00",
+  "updatedAt": "2019-12-14T15:44:09-05:00"
+}

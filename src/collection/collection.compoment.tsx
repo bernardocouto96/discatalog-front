@@ -1,17 +1,26 @@
 import React from "react";
 
-import { Collection } from "../types/collection.types";
+import { Collection, Disc } from "../types/collection.types";
+import EditDiscModalComponent from "./components/editDiscModal.component";
 
 type CollectionComponentProps = {
   collection: Collection;
   hasError: boolean;
+  showEditModal: boolean;
+  discToBeEdited: Disc;
   onDiscDelete: (discId: string) => void;
+  onEditButtonClick: (disc: Disc) => void;
+  onDiscEdit: (disc: Disc) => void;
 };
 
 const CollectionComponent: React.FC<CollectionComponentProps> = ({
   collection,
   hasError,
-  onDiscDelete
+  showEditModal,
+  discToBeEdited,
+  onDiscDelete,
+  onEditButtonClick,
+  onDiscEdit
 }) => {
   return hasError ? (
     <div id="error">
@@ -25,6 +34,12 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
         <li key={disc.discId}>
           {disc.name}
           <button
+            id={`edit-${disc.discId}`}
+            onClick={() => onEditButtonClick(disc)}
+          >
+            editar disco
+          </button>
+          <button
             id={`delete-${disc.discId}`}
             onClick={() => onDiscDelete(disc.discId)}
           >
@@ -32,6 +47,9 @@ const CollectionComponent: React.FC<CollectionComponentProps> = ({
           </button>
         </li>
       ))}
+      {showEditModal && (
+        <EditDiscModalComponent disc={discToBeEdited} onFormSend={onDiscEdit} />
+      )}
     </ul>
   );
 };

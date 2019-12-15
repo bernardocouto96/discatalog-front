@@ -5,7 +5,7 @@ export const emptyDisc: Disc = {
   name: "",
   genre: "",
   artist: "",
-  releaseYear: 0
+  releaseYear: ""
 };
 
 export const emptyCollection: Collection = {

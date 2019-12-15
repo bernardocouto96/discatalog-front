@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import * as R from "ramda";
 
-import { Collection } from "../types/collection.types";
+import { Collection, Disc } from "../types/collection.types";
 import CollectionComponent from "./collection.compoment";
-import { emptyCollection } from "../types/collection.creators";
+import { emptyCollection, emptyDisc } from "../types/collection.creators";
 import {
   fetchCollection,
-  deleteDiscFromCollection
+  deleteDiscFromCollection,
+  editDiscFromCollection
 } from "./collection.requests";
 
 type Location = {
@@ -25,76 +26,127 @@ type CollectionContainerProps = {
   match: Match;
 };
 
+type CollectionFlags = {
+  isLoading: boolean;
+  hasError: boolean;
+  showEditModal: boolean;
+};
+
 const CollectionContainer: React.FC<CollectionContainerProps> = ({
   location,
   match
 }) => {
   const [collection, setCollection] = useState<Collection>(emptyCollection);
-  const [isLoading, setLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [discToBeEdited, setDiscToBeEdited] = useState<Disc>(emptyDisc);
+
+  const [collectionFlags, setCollectionFlags] = useState<CollectionFlags>({
+    isLoading: true,
+    hasError: false,
+    showEditModal: false
+  });
 
   useEffect(() => {
     handleComponentLoad(
       location,
       match.params.collectionId,
       setCollection,
-      setLoading,
-      setHasError
+      updateCollectionFlags(collectionFlags, setCollectionFlags)
     );
   }, [location]);
 
-  if (isLoading) {
+  if (collectionFlags.isLoading) {
     return <div>loading...</div>;
   }
 
   return (
     <CollectionComponent
       collection={collection}
-      hasError={hasError}
-      onDiscDelete={onDiscDelete(collection, setCollection)}
+      hasError={collectionFlags.hasError}
+      showEditModal={collectionFlags.showEditModal}
+      discToBeEdited={discToBeEdited}
+      onDiscDelete={onDiscDelete(
+        collection,
+        setCollection,
+        updateCollectionFlags(collectionFlags, setCollectionFlags)
+      )}
+      onEditButtonClick={onEditButtonClick(
+        setDiscToBeEdited,
+        updateCollectionFlags(collectionFlags, setCollectionFlags)
+      )}
+      onDiscEdit={onDiscEdit(
+        collection,
+        setCollection,
+        updateCollectionFlags(collectionFlags, setCollectionFlags)
+      )}
     />
   );
+};
+
+const updateCollectionFlags = (
+  collectionFlags: CollectionFlags,
+  setCollectionFlags: React.Dispatch<React.SetStateAction<CollectionFlags>>
+) => (updatedFlag: { [key: string]: boolean }) => {
+  setCollectionFlags({ ...collectionFlags, ...updatedFlag });
 };
 
 const handleComponentLoad = (
   location: Location,
   collectionId: string,
   setCollection: React.Dispatch<React.SetStateAction<Collection>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setHasError: React.Dispatch<React.SetStateAction<boolean>>
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
 ) => {
   if (R.isNil(R.path(["state", "collection"], location))) {
-    loadCollection(collectionId, setCollection, setLoading, setHasError);
+    loadCollection(collectionId, setCollection, setCollectionFlags);
   } else {
     setCollection(location.state.collection);
-    setLoading(false);
+    setCollectionFlags({ isLoading: false });
   }
 };
 
 const loadCollection = async (
   collectionId: string,
   setCollection: React.Dispatch<React.SetStateAction<Collection>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  setHasError: React.Dispatch<React.SetStateAction<boolean>>
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
 ) => {
+  setCollectionFlags({ isLoading: true });
+
   try {
     const { data } = await fetchCollection(collectionId);
     setCollection(data);
-    setLoading(false);
+    setCollectionFlags({ isLoading: false });
   } catch (error) {
     console.error(error);
-    setHasError(true);
-    setLoading(false);
+    setCollectionFlags({
+      hasError: true,
+      isLoading: false
+    });
   }
 };
 
 const onDiscDelete = (
   { collectionId }: Collection,
-  setCollection: React.Dispatch<React.SetStateAction<Collection>>
+  setCollection: React.Dispatch<React.SetStateAction<Collection>>,
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
 ) => async (discId: string) => {
   await deleteDiscFromCollection(collectionId, discId);
-  const { data } = await fetchCollection(collectionId);
-  setCollection(data);
+  loadCollection(collectionId, setCollection, setCollectionFlags);
+};
+
+const onEditButtonClick = (
+  setDiscToBeEdited: React.Dispatch<React.SetStateAction<Disc>>,
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
+) => (disc: Disc) => {
+  setDiscToBeEdited(disc);
+  setCollectionFlags({ showEditModal: true });
+};
+
+const onDiscEdit = (
+  { collectionId }: Collection,
+  setCollection: React.Dispatch<React.SetStateAction<Collection>>,
+  setCollectionFlags: (updatedFlag: { [key: string]: boolean }) => void
+) => async (disc: Disc) => {
+  await editDiscFromCollection(collectionId, disc);
+  loadCollection(collectionId, setCollection, setCollectionFlags);
 };
 
 export default CollectionContainer;
