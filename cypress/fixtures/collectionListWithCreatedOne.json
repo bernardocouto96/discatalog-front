@@ -1,0 +1,114 @@
+[
+  {
+    "collectionId": "1",
+    "collectionName": "Top 1 - 3",
+    "discs": [
+      {
+        "discId": "1",
+        "name": "Thriller",
+        "genre": "Pop, rock, R&B",
+        "artist": "Michael Jackson",
+        "releaseYear": "1982",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "2",
+        "name": "Back in Black",
+        "genre": "Hard rock",
+        "artist": "AC/DC",
+        "releaseYear": "1980",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "3",
+        "name": "The Dark Side of the Moon",
+        "genre": "Progressive rock",
+        "artist": "Pink Floyd",
+        "releaseYear": "1973",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      }
+    ],
+    "createdAt": "2019-12-14T15:44:09-05:00",
+    "updatedAt": "2019-12-14T15:44:09-05:00"
+  },
+  {
+    "collectionId": "2",
+    "collectionName": "Top 4 - 6",
+    "discs": [
+      {
+        "discId": "4",
+        "name": "The Bodyguard",
+        "genre": "R&B, soul, pop, soundtrack",
+        "artist": "Whitney Houston",
+        "releaseYear": "1992",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "5",
+        "name": "Bat Out of Hell",
+        "genre": "Hard rock, glam rock, heavy metal",
+        "artist": "Meat Loaf",
+        "releaseYear": "1977",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "6",
+        "name": "Their Greatest Hits (1971–1975)",
+        "genre": "Country rock, soft rock, folk rock",
+        "artist": "Eagles",
+        "releaseYear": "1976",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      }
+    ],
+    "createdAt": "2019-12-14T15:44:09-05:00",
+    "updatedAt": "2019-12-14T15:44:09-05:00"
+  },
+  {
+    "collectionId": "3",
+    "collectionName": "Top 7 - 9",
+    "discs": [
+      {
+        "discId": "7",
+        "name": "Saturday Night Fever",
+        "genre": "Disco",
+        "artist": "Bee Gees",
+        "releaseYear": "1977",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "8",
+        "name": "Fleetwood Mac",
+        "genre": "Soft rock",
+        "artist": "Fleetwood Mac",
+        "releaseYear": "1977",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      },
+      {
+        "discId": "9",
+        "name": "Come On Over",
+        "genre": "Country, pop",
+        "artist": "Shania Twain",
+        "releaseYear": "1997",
+        "createdAt": "2019-12-14T15:44:09-05:00",
+        "updatedAt": "2019-12-14T15:44:09-05:00"
+      }
+    ],
+    "createdAt": "2019-12-14T15:44:09-05:00",
+    "updatedAt": "2019-12-14T15:44:09-05:00"
+  },
+  {
+    "collectionId": "4",
+    "collectionName": "My new collection",
+    "discs": [],
+    "createdAt": "2019-12-14T15:44:09-05:00",
+    "updatedAt": "2019-12-14T15:44:09-05:00"
+  }
+]

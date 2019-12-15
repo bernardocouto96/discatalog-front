@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import * as R from "ramda";
 
-import CollectionList from "./collectionList.compoment";
-import { fetchCollectionList } from "./collectionList.requests";
+import CollectionList from "./collectionList.component";
+import {
+  fetchCollectionList,
+  createCollection
+} from "./collectionList.requests";
 import { Collection } from "../types/collection.types";
 import { emptyCollection } from "../types/collection.creators";
 
@@ -12,6 +15,10 @@ const CollectionListContainer: React.FC = () => {
     emptyCollection
   ]);
   const [isLoading, setLoading] = useState(true);
+  const [showCreateCollectionModal, setShowCreateCollectionModal] = useState(
+    false
+  );
+
   const [redirectParams, setRedirectParams] = useState({
     shouldRedirect: false,
     collectionId: ""
@@ -32,7 +39,10 @@ const CollectionListContainer: React.FC = () => {
   return (
     <CollectionList
       collections={collections}
+      showCreateCollectionModal={showCreateCollectionModal}
       onCollectionSelect={onCollectionSelect(setRedirectParams)}
+      onAddCollectionClick={() => setShowCreateCollectionModal(true)}
+      onCollectionCreate={onCollectionCreate(setCollections, setLoading)}
     />
   );
 };
@@ -41,6 +51,7 @@ const loadCollections = async (
   setCollections: React.Dispatch<React.SetStateAction<[Collection]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  setLoading(true);
   const { data } = await fetchCollectionList();
   setCollections(data);
   setLoading(false);
@@ -58,6 +69,14 @@ const onCollectionSelect = (
     shouldRedirect: true,
     collectionId: selectedCollectionId
   });
+};
+
+const onCollectionCreate = (
+  setCollections: React.Dispatch<React.SetStateAction<[Collection]>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => async (collectionName: string) => {
+  await createCollection(collectionName);
+  loadCollections(setCollections, setLoading);
 };
 
 const redirectHandler = (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as R from "ramda";
 
 import { Collection, Disc } from "../types/collection.types";
-import CollectionComponent from "./collection.compoment";
+import CollectionComponent from "./collection.component";
 import { emptyCollection, emptyDisc } from "../types/collection.creators";
 import {
   fetchCollection,
